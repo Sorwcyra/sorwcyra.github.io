@@ -224,19 +224,37 @@
 
   /* 社媒 */
   .social-sec {
-    position: relative; text-align: center; padding: 100px 0 120px;
+    position: relative; text-align: center; padding: 90px 0 40px;
     border-top: 1px solid var(--border); overflow: hidden;
   }
-  .rings { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); pointer-events: none; }
-  .ring { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); border: 1px solid var(--border); border-radius: 50%; }
   .social-sec .sec-pill { margin-bottom: 8px; }
-  .social-hint { color: var(--muted); font-size: 12.5px; margin-bottom: 8px; }
+  .social-hint { color: var(--muted); font-size: 12.5px; margin-bottom: 4px; }
   .icon-stage {
-    position: relative; height: 620px; display: flex; align-items: center; justify-content: center;
+    position: relative; height: 680px; display: flex; align-items: center; justify-content: center;
     --scale: 1;
   }
-  @media (max-width: 900px) { .icon-stage { height: 560px; --scale: .82; } }
-  @media (max-width: 620px) { .icon-stage { height: 520px; --scale: .62; } }
+  @media (max-width: 900px) { .icon-stage { height: 600px; --scale: .78; } }
+  @media (max-width: 620px) { .icon-stage { height: 520px; --scale: .58; } }
+
+  /* 可见轨道：同心圆环 + 中心柔光 */
+  .rings { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+  .ring {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: calc(var(--d) * var(--scale)); height: calc(var(--d) * var(--scale));
+    border-radius: 50%; border: 1px solid rgba(255,255,255,.21);
+  }
+  .ring.inner { border-color: rgba(255,255,255,.30); }
+  .ring.outer { border-color: rgba(255,255,255,.14); }
+  html:not(.dark) .ring { border-color: rgba(0,0,0,.15); }
+  html:not(.dark) .ring.inner { border-color: rgba(0,0,0,.20); }
+  html:not(.dark) .ring.outer { border-color: rgba(0,0,0,.09); }
+  .social-sec .glow {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 820px; height: 820px; pointer-events: none;
+    background: radial-gradient(circle, rgba(255,255,255,.07), rgba(255,255,255,0) 60%);
+  }
+  html:not(.dark) .social-sec .glow { background: radial-gradient(circle, rgba(0,0,0,.055), rgba(0,0,0,0) 60%); }
+
   .social-core { position: relative; z-index: 2; max-width: 620px; padding: 0 20px; }
   .social-title { font-size: clamp(28px, 4.2vw, 46px); font-weight: 600; line-height: 1.35; margin-bottom: 14px; }
   .social-title .hl { color: var(--accent); }
@@ -251,20 +269,27 @@
   .orbit.rev { animation-name: revolveRev; }
   .orbit .s-icon {
     position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%);
-    width: 56px; height: 56px; border-radius: 50%; z-index: 3;
+    width: 52px; height: 52px; border-radius: 50%; z-index: 3;
     display: flex; align-items: center; justify-content: center;
-    border: 1px solid var(--border); box-shadow: 0 8px 28px rgba(0,0,0,.35);
-    transition: box-shadow .25s;
+    transition: transform .25s, filter .25s;
   }
-  .orbit .s-icon:hover { box-shadow: 0 12px 36px rgba(0,0,0,.5); }
+  .orbit .s-icon:hover { transform: translate(-50%, -50%) scale(1.14); filter: brightness(1.15); }
+  /* 品牌色 + 彩色光晕 */
+  .ic-nowcoder { background: #00bc70; box-shadow: 0 0 0 1px rgba(0,188,112,.55), 0 0 26px 2px rgba(0,188,112,.42), 0 6px 20px rgba(0,0,0,.45); }
+  .ic-mail     { background: #f2f3f5; box-shadow: 0 0 0 1px rgba(255,255,255,.30), 0 0 26px 2px rgba(255,255,255,.20), 0 6px 20px rgba(0,0,0,.45); }
+  .ic-github   { background: #f2f3f5; box-shadow: 0 0 0 1px rgba(255,255,255,.30), 0 0 26px 2px rgba(255,255,255,.22), 0 6px 20px rgba(0,0,0,.45); }
+  html:not(.dark) .ic-mail, html:not(.dark) .ic-github { background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.12), 0 0 18px 2px rgba(0,0,0,.06), 0 8px 20px rgba(0,0,0,.14); }
+  .ic-douyin   { background: #0b0b0d; box-shadow: 0 0 0 1px rgba(255,255,255,.16), 0 0 28px 2px rgba(254,44,85,.35), 0 0 20px rgba(37,244,238,.22), 0 6px 20px rgba(0,0,0,.45); }
   .s-inner {
     width: 100%; height: 100%; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 12.5px; font-weight: 600;
+    font-size: 13px; font-weight: 700; letter-spacing: .5px;
     animation: unspin var(--dur) linear infinite;
   }
   .orbit.rev .s-inner { animation-name: unspinRev; }
-  .s-icon svg { width: 26px; height: 26px; }
+  .ic-nowcoder .s-inner { color: #fff; }
+  .ic-mail .s-inner, .ic-github .s-inner { color: #0a0a0b; }
+  .s-icon svg { width: 24px; height: 24px; display: block; }
   @keyframes revolve {
     from { transform: rotate(var(--a0, 0deg)); }
     to { transform: rotate(calc(var(--a0, 0deg) + 360deg)); }
@@ -284,7 +309,7 @@
   @media (prefers-reduced-motion: reduce) {
     .orbit, .s-inner { animation: none; }
   }
-</style>
+
   .btn {
     display: inline-block; padding: 10px 26px; border-radius: 99px;
     border: 1px solid var(--border); background: var(--surface);
@@ -621,47 +646,52 @@
 </main>
 
 <section id="contact" class="social-sec">
-  <div class="rings">
-    <div class="ring" style="width:300px;height:300px;opacity:.7"></div>
-    <div class="ring" style="width:360px;height:360px;opacity:.5"></div>
-    <div class="ring" style="width:480px;height:480px;opacity:.35"></div>
-    <div class="ring" style="width:600px;height:600px;opacity:.22"></div>
-  </div>
   <div style="position:relative">
     <div class="sec-pill">• 社媒</div>
     <div class="social-hint">点击图标访问社媒</div>
 
     <div class="icon-stage">
-      <div class="orbit" style="--r:180px;--dur:26s;--a0:20deg">
-        <a class="s-icon" href="https://ac.nowcoder.com/acm/contest/profile/57460426" target="_blank" title="牛客">
-          <span class="s-inner" style="color:var(--text)">牛客</span>
+      <div class="rings">
+        <div class="ring inner" style="--d:300px"></div>
+        <div class="ring" style="--d:360px"></div>
+        <div class="ring" style="--d:480px"></div>
+        <div class="ring outer" style="--d:600px"></div>
+      </div>
+      <div class="glow"></div>
+
+      <div class="orbit" style="--r:150px;--dur:20s;--a0:250deg">
+        <a class="s-icon ic-mail" href="mailto:19112634506@163.com" title="邮箱">
+          <span class="s-inner">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2.4" stroke="#0a0a0b" stroke-width="1.9"/><path d="M4.4 7.6l7.6 5.6 7.6-5.6" stroke="#0a0a0b" stroke-width="1.9" fill="none" stroke-linecap="round"/></svg>
+          </span>
         </a>
       </div>
+
+      <div class="orbit" style="--r:180px;--dur:26s;--a0:20deg">
+        <a class="s-icon ic-nowcoder" href="https://ac.nowcoder.com/acm/contest/profile/57460426" target="_blank" title="牛客">
+          <span class="s-inner">牛客</span>
+        </a>
+      </div>
+
       <div class="orbit rev" style="--r:240px;--dur:34s;--a0:120deg">
-        <a class="s-icon" style="width:62px;height:62px;background:#111" href="https://www.douyin.com/user/你的抖音ID" target="_blank" title="抖音">
-          <span class="s-inner">
+        <a class="s-icon ic-douyin" style="width:56px;height:56px" href="https://www.douyin.com/user/你的抖音ID" target="_blank" title="抖音">
+          <span class="s-inner" style="padding:12px">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#25F4EE" d="M9.3 9.6v2.2c-1.7 0-3.2-.6-4.4-1.5v5.9c0 2.9-2.4 5.3-5.3 5.3v-2.2c1.7 0 3.1-1.4 3.1-3.1V6.3h2.2c.3 1.9 2 3.3 4.4 3.3z" transform="translate(7.5 -1)"/><path fill="#FE2C55" d="M9.9 6.3h2.2c.2 1.9 1.7 3.4 3.9 3.5v2.2c-1.5 0-2.9-.5-4-1.3v5.9c0 2.9-2.4 5.3-5.3 5.3S1.4 19.5 1.4 16.6 3.8 11.3 6.7 11.3v2.2c-1.7 0-3.1 1.4-3.1 3.1s1.4 3.1 3.1 3.1 3.1-1.4 3.1-3.1L9.9 6.3z"/><path fill="#fff" d="M9.9 6.3h2.2c.2 1.9 1.7 3.4 3.9 3.5v2.2c-1.5 0-2.9-.5-4-1.3v5.9c0 2.9-2.4 5.3-5.3 5.3v-2.2c1.7 0 3.1-1.4 3.1-3.1L9.9 6.3z"/></svg>
           </span>
         </a>
       </div>
-      <div class="orbit" style="--r:150px;--dur:20s;--a0:250deg">
-        <a class="s-icon" href="mailto:19112634506@163.com" title="邮箱">
-          <span class="s-inner" style="background:var(--text)">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2" stroke="var(--bg)" stroke-width="2"/><path d="M4 7l8 6 8-6" stroke="var(--bg)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-          </span>
-        </a>
-      </div>
+
       <div class="orbit rev" style="--r:300px;--dur:44s;--a0:310deg">
-        <a class="s-icon" style="width:64px;height:64px" href="https://github.com/Sorwcyra" target="_blank" title="GitHub">
+        <a class="s-icon ic-github" style="width:58px;height:58px" href="https://github.com/Sorwcyra" target="_blank" title="GitHub">
           <span class="s-inner">
-            <svg viewBox="0 0 16 16" fill="var(--text)" xmlns="http://www.w3.org/2000/svg"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+            <svg viewBox="0 0 16 16" fill="#0a0a0b" xmlns="http://www.w3.org/2000/svg"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
           </span>
         </a>
       </div>
 
       <div class="social-core">
         <h2 class="social-title">沟通与协作，<span class="hl">从这里开始。</span></h2>
-        <p class="social-sub">实习机会、技术交流、开源协作，可以直接通过邮箱联系。</p>
+        <p class="social-sub">岗位沟通、面试安排、工程机会、技术交流和开源协作可以直接通过邮箱联系。</p>
         <a class="btn primary" href="mailto:19112634506@163.com">发送邮件</a>
       </div>
     </div>
