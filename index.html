@@ -46,11 +46,19 @@
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
   }
-  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .nav-inner {
+    position: relative;
+    display: flex; align-items: center; justify-content: space-between; height: 60px;
+  }
   .logo { font-weight: 600; font-size: 17px; letter-spacing: .3px; }
   .logo span { color: var(--accent); }
   .nav-right { display: flex; align-items: center; gap: 22px; }
-  .nav-links { display: flex; gap: 24px; }
+  /* 菜单项始终居中于页面正中，不受左右两侧内容宽度影响 */
+  .nav-links {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; gap: 26px;
+  }
   .nav-links a { color: var(--muted); font-size: 14px; }
   .nav-links a:hover { color: var(--text); }
   .nav-cta {
