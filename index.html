@@ -311,9 +311,9 @@
   @media (max-width: 780px) { .proj-head { grid-template-columns: 1fr; gap: 16px; } }
   .proj-title { font-size: clamp(23px, 2.75vw, 32px); font-weight: 600; line-height: 1.4; margin-top: 14px; text-wrap: balance; }
   .proj-desc { color: var(--muted); font-size: 14.5px; padding-top: 26px; }
-  .proj-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+  .proj-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 26px; }
   .tab {
-    flex: 1; min-width: 110px; text-align: center; cursor: pointer;
+    flex: 0 1 300px; min-width: 110px; text-align: center; cursor: pointer;
     background: var(--surface); border: 1px solid var(--border); color: var(--muted);
     padding: 10px 16px; border-radius: 10px; font-size: 14px; font-family: inherit;
     transition: background .2s, color .2s, border-color .2s;
@@ -765,20 +765,18 @@
         <h2 class="proj-title">从业务链路到技术选型。<br>每个仓库都能跑起来。</h2>
       </div>
       <p class="proj-desc">
-        法智云是主线：一套完整的法律知识 RAG 问答系统，从文档解析、混合检索到自研 LoRA 模型。另外两个是把多模态能力接进纯文本模型的 DeepSeek 工具仓库。
+        法智云是主线：一套完整的法律知识 RAG 问答系统，从文档解析、混合检索到自研 LoRA 模型。另一个是把多模态能力接进纯文本模型的 DeepSeek 技能仓库。
       </p>
     </div>
 
     <div class="proj-tabs">
-      <button class="tab on" data-cat="all">全部</button>
-      <button class="tab" data-cat="fullstack">全栈</button>
-      <button class="tab" data-cat="agent">Agent</button>
-      <button class="tab" data-cat="open">开源</button>
+      <button class="tab on">法智云</button>
+      <button class="tab">ds-vision-skill</button>
     </div>
 
     <div class="pshow" id="pshow">
 
-      <article class="pslide on" data-cat="fullstack open" data-summary="法智云面向法规条文、法律术语、案例评析与政务咨询场景，围绕文档导入、检索增强与答案溯源三条链路展开，技术栈包含 FastAPI、Vue 3、LangChain、Qdrant、MySQL、Redis，以及自研的 Qwen2.5-7B + LoRA 法律模型。">
+      <article class="pslide on" data-summary="法智云面向法规条文、法律术语、案例评析与政务咨询场景，围绕文档导入、检索增强与答案溯源三条链路展开，技术栈包含 FastAPI、Vue 3、LangChain、Qdrant、MySQL、Redis，以及自研的 Qwen2.5-7B + LoRA 法律模型。">
         <div class="ps-grid">
           <div class="ps-left">
             <span class="pill-label">Full Stack · RAG</span>
@@ -820,7 +818,7 @@
         </div>
       </article>
 
-      <article class="pslide" data-cat="agent open" data-summary="ds-vision-skill 给 DeepSeek 这类纯文本模型补上多模态看图能力：按 Skill 协议加载视觉工具，把图片转成结构化描述后再交给模型推理，仓库累计 160+ Stars。">
+      <article class="pslide" data-summary="ds-vision-skill 给 DeepSeek 这类纯文本模型补上多模态看图能力：按 Skill 协议加载视觉工具，把图片转成结构化描述后再交给模型推理，仓库累计 160+ Stars。">
         <div class="ps-grid">
           <div class="ps-left">
             <span class="pill-label">Open Source · Agent</span>
@@ -837,10 +835,16 @@
             <div class="flow-head"><span>能力链路</span><b>Skill</b></div>
             <div class="arch">
               <div class="arch-row">
+                <div class="anode"><b>图片输入</b><span>本地 / URL</span></div>
+                <div class="anode"><b>视觉模型</b><span>多模态</span></div>
+                <div class="anode"><b>OCR 抽取</b><span>关键文本</span></div>
+                <div class="anode"><b>结构化</b><span>JSON 描述</span></div>
+              </div>
+              <div class="arch-row">
                 <div class="anode"><b>文本模型</b><span>DeepSeek</span></div>
                 <div class="anode"><b>加载技能</b><span>Skill 协议</span></div>
-                <div class="anode"><b>图像识别</b><span>多模态</span></div>
-                <div class="anode"><b>结构化</b><span>回灌上下文</span></div>
+                <div class="anode"><b>读取描述</b><span>回灌上下文</span></div>
+                <div class="anode"><b>继续推理</b><span>输出答案</span></div>
               </div>
             </div>
             <div class="arch-note">
@@ -849,40 +853,6 @@
             </div>
             <div class="flow-tags">
               <span class="tag">Vision</span><span class="tag">OCR</span><span class="tag">纯文本模型增强</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <article class="pslide" data-cat="agent open" data-summary="ds-vision-plugin 把图片直接接进 DeepSeek Harness 工作流：粘贴即用，四模型视觉赛跑取最快结果，再自动桥接成模型能读的文字。">
-        <div class="ps-grid">
-          <div class="ps-left">
-            <span class="pill-label">Open Source · Plugin</span>
-            <h3 class="ps-name">ds-vision-plugin<em>Image bridge for DeepSeek Harness</em></h3>
-            <p>
-              在 DeepSeek Harness 里直接粘贴图片：四个视觉模型并行赛跑取最快结果，OCR 抽取关键文字后自动桥接成模型能读的文本，不需要手动转述图片内容。
-            </p>
-            <div class="tags">
-              <span class="tag">JavaScript</span><span class="tag">插件</span><span class="tag">OCR</span>
-            </div>
-            <a class="btn primary" href="https://github.com/Sorwcyra/ds-vision-plugin" target="_blank" rel="noopener">打开仓库</a>
-          </div>
-          <div class="ps-right">
-            <div class="flow-head"><span>处理链路</span><b>Plugin</b></div>
-            <div class="arch">
-              <div class="arch-row">
-                <div class="anode"><b>粘贴图片</b><span>Clipboard</span></div>
-                <div class="anode"><b>模型赛跑</b><span>四模型并行</span></div>
-                <div class="anode"><b>OCR</b><span>关键文本</span></div>
-                <div class="anode"><b>文本桥接</b><span>接回对话</span></div>
-              </div>
-            </div>
-            <div class="arch-note">
-              <span>关键设计</span>
-              <p>四个视觉模型并发请求取最快返回，失败自动降级到下一个，OCR 结果与原文一起桥接进对话上下文。</p>
-            </div>
-            <div class="flow-tags">
-              <span class="tag">DeepSeek Harness</span><span class="tag">多模型</span><span class="tag">Clipboard</span>
             </div>
           </div>
         </div>
@@ -1046,35 +1016,22 @@
   window.addEventListener('scroll', highlight, { passive: true });
   highlight();
 
-  // 项目：分类筛选 + 左右切换（参考站同款结构）
+  // 项目：tab 直接对应项目，左右按钮循环切换
   const tabs = [...document.querySelectorAll('.proj-tabs .tab')];
   const slides = [...document.querySelectorAll('.pslide')];
   const pnavText = document.getElementById('pnavText');
-  let pIdx = 0, pCat = 'all';
-  const pVisible = () => slides.filter(s => pCat === 'all' || s.dataset.cat.split(' ').includes(pCat));
+  let pIdx = 0;
   function pRender() {
-    const vis = pVisible();
-    if (!vis.length) return;
-    if (pIdx < 0 || pIdx >= vis.length) pIdx = 0;
-    slides.forEach(s => s.classList.toggle('on', s === vis[pIdx]));
-    if (pnavText) pnavText.textContent = vis[pIdx].dataset.summary || '';
+    if (!slides.length) return;
+    pIdx = (pIdx + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle('on', i === pIdx));
+    tabs.forEach((t, i) => t.classList.toggle('on', i === pIdx));
+    if (pnavText) pnavText.textContent = slides[pIdx].dataset.summary || '';
   }
-  tabs.forEach(t => t.addEventListener('click', () => {
-    tabs.forEach(x => x.classList.remove('on'));
-    t.classList.add('on');
-    pCat = t.dataset.cat;
-    pIdx = 0;
-    pRender();
-  }));
+  tabs.forEach((t, i) => t.addEventListener('click', () => { pIdx = i; pRender(); }));
   const pPrev = document.getElementById('pPrev'), pNext = document.getElementById('pNext');
-  if (pPrev) pPrev.addEventListener('click', () => {
-    const n = pVisible().length;
-    pIdx = (pIdx - 1 + n) % n; pRender();
-  });
-  if (pNext) pNext.addEventListener('click', () => {
-    const n = pVisible().length;
-    pIdx = (pIdx + 1) % n; pRender();
-  });
+  if (pPrev) pPrev.addEventListener('click', () => { pIdx -= 1; pRender(); });
+  if (pNext) pNext.addEventListener('click', () => { pIdx += 1; pRender(); });
   pRender();
 
   // 叠加滚动动效：后面的卡片盖上来时，前一张缩小 + 变暗
