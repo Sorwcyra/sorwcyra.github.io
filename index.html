@@ -75,7 +75,21 @@
   }
   .big-text b { font-weight: 600; }
 
-  .mascot { position: absolute; left: 10px; bottom: 60px; width: 130px; opacity: .9; pointer-events: none; }
+  .mascot { display: none; }
+
+  /* 信息卡片网格 */
+  .info-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    max-width: 660px; margin: 56px 0 0 clamp(0px, 18vw, 260px);
+  }
+  @media (max-width: 680px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 16px 18px;
+  }
+  .info-card .k { color: var(--muted); font-size: 12.5px; margin-bottom: 4px; }
+  .info-card .v { font-size: 15px; font-weight: 500; line-height: 1.5; }
+  .info-card .v small { color: var(--muted); font-weight: 400; font-size: 13px; }
 
   /* 通用 section */
   section { padding: 70px 0; }
@@ -193,16 +207,16 @@
       <p>开源贡献者，个人项目 GitHub 累计 <b>160+ Stars</b>；技术分享创作者，全网累计 <b>340+ 粉丝</b>，<b>1.1w+ 点赞</b>，<b>52w+ 浏览量</b>。</p>
       <p>生活中，我喜欢旅游、吃美食、爬山、听轻音乐。除此之外，我对理财也有一定的兴趣，关注美股，保持对技术和生活的长期探索。</p>
     </div>
+
+    <div class="info-grid">
+      <div class="info-card"><div class="k">姓名</div><div class="v">汪晨阳 <small>/ Wang Chenyang</small></div></div>
+      <div class="info-card"><div class="k">技术 ID</div><div class="v">sorwcyra</div></div>
+      <div class="info-card"><div class="k">学校</div><div class="v">长江师范学院 · 数据科学与大数据技术 <small>本科在读</small></div></div>
+      <div class="info-card"><div class="k">当前所在地</div><div class="v">重庆，中国 <small>（在重庆大学交换）</small></div></div>
+      <div class="info-card"><div class="k">求职方向</div><div class="v">开发工程师 <small>· 实习</small></div></div>
+      <div class="info-card"><div class="k">技术方向</div><div class="v">Python 后端 · AI Agent · 低代码平台</div></div>
+    </div>
   </div>
-  <svg class="mascot" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <ellipse cx="58" cy="52" rx="34" ry="26" fill="var(--surface)" stroke="var(--text)" stroke-width="2"/>
-    <circle cx="46" cy="44" r="3" fill="var(--text)"/>
-    <circle cx="66" cy="44" r="3" fill="var(--text)"/>
-    <path d="M52 52 Q56 56 60 52" stroke="var(--text)" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <path d="M34 32 L40 18 L48 28 M74 32 L70 18 L62 28" stroke="var(--text)" stroke-width="2" fill="var(--surface)" stroke-linejoin="round"/>
-    <path d="M92 60 L112 60 M96 66 L110 66 M100 72 L106 72" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>
-    <path d="M20 56 Q10 58 14 66" stroke="var(--text)" stroke-width="2" fill="none" stroke-linecap="round"/>
-  </svg>
 </section>
 
 <main class="wrap">
