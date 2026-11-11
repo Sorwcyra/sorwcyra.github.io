@@ -320,31 +320,81 @@
   }
   .tab:hover { color: var(--text); }
   .tab.on { background: var(--text); color: var(--bg); border-color: var(--text); }
-  .proj-show {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
-    padding: 26px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 24px; margin-bottom: 18px;
-  }
-  @media (max-width: 820px) { .proj-show { grid-template-columns: 1fr; } }
   .pill-label {
     display: inline-block; background: var(--pill-bg); border: 1px solid var(--border);
     border-radius: 99px; padding: 3px 12px; font-size: 12px; color: var(--muted); margin-bottom: 16px;
   }
-  .proj-left h3 { font-size: 30px; font-weight: 600; margin-bottom: 10px; letter-spacing: -.3px; }
-  .proj-left p { color: var(--muted); font-size: 14.5px; margin-bottom: 16px; max-width: 380px; }
-  .proj-left .btn { margin: 18px 0 0; font-size: 14px; padding: 9px 22px; }
-  .proj-right {
-    background: color-mix(in srgb, var(--surface) 60%, var(--bg));
-    border: 1px solid var(--border); border-radius: 16px; padding: 20px;
-    display: flex; flex-direction: column; gap: 16px;
+
+  /* 项目大卡：外框 + 左右两个内嵌面板 */
+  .pslide {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 24px;
+    padding: 12px; display: none;
   }
+  .pslide.on { display: block; animation: pIn .42s ease; }
+  @keyframes pIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .ps-grid { display: grid; grid-template-columns: 1fr 1.02fr; gap: 12px; }
+  @media (max-width: 820px) { .ps-grid { grid-template-columns: 1fr; } }
+
+  .ps-left, .ps-right {
+    border: 1px solid var(--border); border-radius: 15px;
+    background: color-mix(in srgb, var(--surface) 58%, var(--bg));
+  }
+  .ps-left { padding: 26px 28px 24px; display: flex; flex-direction: column; }
+  @media (max-width: 820px) { .ps-left { padding: 22px 20px; } }
+  .ps-left .pill-label { margin-bottom: 14px; }
+  .ps-name {
+    font-size: clamp(30px, 3.9vw, 42px); font-weight: 600; letter-spacing: -.8px;
+    line-height: 1.14; margin-bottom: 12px;
+  }
+  .ps-name em { display: block; font-style: normal; font-size: 12.5px; letter-spacing: .2px; font-weight: 500; color: var(--muted); margin-top: 8px; }
+  .ps-left p { color: var(--muted); font-size: 13.8px; line-height: 1.85; }
+  .ps-left .tags { margin-top: 16px; }
+  .ps-left .btn { margin: 20px 0 0; align-self: flex-start; font-size: 13.5px; padding: 8px 22px; }
+
+  .ps-right { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 12px; }
   .flow-head { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--muted); }
-  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-  .fnode {
-    border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px;
-    font-size: 13px; background: var(--surface);
+  .flow-head b {
+    font-weight: 500; font-size: 12.5px; color: var(--text);
+    background: var(--tag-bg); border-radius: 99px; padding: 3px 11px;
   }
-  .farrow { color: var(--dim); font-size: 13px; }
-  .flow-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+  .arch { flex: 1; display: grid; gap: 14px; align-content: center; }
+  .arch-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 620px) { .arch-row { grid-template-columns: repeat(2, 1fr); gap: 10px; } .arch-row .anode::after { display: none; } }
+  .anode {
+    position: relative; border: 1px solid var(--border); border-radius: 9px;
+    padding: 8px 10px; background: color-mix(in srgb, var(--surface) 70%, var(--bg));
+  }
+  .anode::after {
+    content: "→"; position: absolute; right: -13px; top: 50%; transform: translateY(-50%);
+    font-size: 11px; color: var(--dim); line-height: 1; pointer-events: none;
+  }
+  .anode:nth-child(4n)::after { display: none; }
+  .anode b { display: block; font-size: 12.5px; font-weight: 500; line-height: 1.4; white-space: nowrap; }
+  .anode span { display: block; font-size: 10.5px; color: var(--muted); line-height: 1.5; margin-top: 1px; white-space: nowrap; }
+  .arch-note { border-top: 1px solid var(--border); padding-top: 10px; }
+  .arch-note span { font-size: 11px; color: var(--muted); letter-spacing: .4px; opacity: .85; }
+  .arch-note p { font-size: 11.8px; color: var(--muted); line-height: 1.75; margin-top: 3px; }
+  .flow-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 2px; }
+
+  /* 卡片下方：左右切换 + 一句话总结 */
+  .pnav { display: flex; align-items: center; justify-content: center; gap: 24px; margin-top: 24px; }
+  .pnav-btn {
+    flex: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+    border: 1px solid var(--border); background: transparent; color: var(--muted);
+    font-size: 14px; line-height: 1; display: flex; align-items: center; justify-content: center;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .pnav-btn:hover { color: var(--text); background: var(--tag-bg); border-color: var(--dim); }
+  .pnav-text {
+    flex: 1; text-align: center; color: var(--muted); font-size: 13.2px; line-height: 1.85;
+    max-width: 540px; text-wrap: balance;
+  }
+  .proj-foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    flex-wrap: wrap; margin-top: 26px;
+  }
+  .proj-foot .sec-pill { margin-bottom: 0; }
+  .proj-foot .note { color: var(--dim); font-size: 12.5px; }
 
   /* 兴趣 */
   .hobby-row { display: flex; flex-wrap: wrap; gap: 12px; max-width: 860px; }
@@ -453,7 +503,7 @@
   .reveal.on { opacity: 1; transform: none; }
 
   /* 全站内容列：统一宽度并水平居中（参考站同款居中排版） */
-  .sec-head, .grid, .stack, .proj-head, .proj-tabs, .proj-show, .hobby-row {
+  .sec-head, .grid, .stack, .proj-head, .proj-tabs, .pshow, .pnav, .proj-foot, .hobby-row {
     max-width: 760px;
     margin-left: auto;
     margin-right: auto;
@@ -470,7 +520,7 @@
     .tl-item::before { left: -26px; }
   }
   @media (max-width: 860px) {
-    .sec-head, .grid, .stack, .proj-head, .proj-tabs, .proj-show, .hobby-row, .timeline {
+    .sec-head, .grid, .stack, .proj-head, .proj-tabs, .pshow, .pnav, .proj-foot, .hobby-row, .timeline {
       max-width: none;
     }
   }
@@ -712,62 +762,143 @@
     <div class="proj-head">
       <div>
         <div class="sec-pill">• 项目</div>
-        <h2 class="proj-title">项目按工程问题组织。<br>仓库边界清晰可查。</h2>
+        <h2 class="proj-title">从业务链路到技术选型。<br>每个仓库都能跑起来。</h2>
       </div>
       <p class="proj-desc">
-        这里集中展示 ds-vision-skill 与 ds-vision-plugin：前者给 DeepSeek 等纯文本模型补上多模态看图能力，后者把图片直接接进 DeepSeek 的工作流里。
+        法智云是主线：一套完整的法律知识 RAG 问答系统，从文档解析、混合检索到自研 LoRA 模型。另外两个是把多模态能力接进纯文本模型的 DeepSeek 工具仓库。
       </p>
     </div>
 
     <div class="proj-tabs">
       <button class="tab on" data-cat="all">全部</button>
+      <button class="tab" data-cat="fullstack">全栈</button>
       <button class="tab" data-cat="agent">Agent</button>
-      <button class="tab" data-cat="plugin">插件</button>
-      <button class="tab" data-cat="open">Open Source</button>
+      <button class="tab" data-cat="open">开源</button>
     </div>
 
-    <div class="proj-show reveal" data-cat="agent open">
-      <div class="proj-left">
-        <div class="pill-label">Open Source · Agent</div>
-        <h3>ds-vision-skill</h3>
-        <p>给 DeepSeek 等纯文本模型补上多模态图像能力的 Vision 技能套件，让只会看文字的模型也能「看图」。</p>
-        <div class="tags"><span class="tag">AI Agent</span><span class="tag">多模态</span><span class="tag">Skill</span></div>
-        <a class="btn primary" href="https://github.com/Sorwcyra/ds-vision-skill" target="_blank">打开仓库</a>
-      </div>
-      <div class="proj-right">
-        <div class="flow-head"><span>能力链路</span><span>★ 158</span></div>
-        <div class="flow">
-          <span class="fnode">文本模型</span><span class="farrow">→</span>
-          <span class="fnode">加载 Skill</span><span class="farrow">→</span>
-          <span class="fnode">图像识别</span><span class="farrow">→</span>
-          <span class="fnode">结构化描述</span>
+    <div class="pshow" id="pshow">
+
+      <article class="pslide on" data-cat="fullstack open" data-summary="法智云面向法规条文、法律术语、案例评析与政务咨询场景，围绕文档导入、检索增强与答案溯源三条链路展开，技术栈包含 FastAPI、Vue 3、LangChain、Qdrant、MySQL、Redis，以及自研的 Qwen2.5-7B + LoRA 法律模型。">
+        <div class="ps-grid">
+          <div class="ps-left">
+            <span class="pill-label">Full Stack · RAG</span>
+            <h3 class="ps-name">法智云<em>Fazhiyun · Law RAG</em></h3>
+            <p>
+              面向法规条文与政务咨询的法律知识问答系统。文档导入后自动解析、按法律语义切块，BGE 向量化写入 Qdrant；检索侧向量 + 关键词混合召回，再经 Reranker 重排，回答逐句带引用溯源。生成侧可在云端 API、本地 Ollama 和自研微调模型之间切换。
+            </p>
+            <div class="tags">
+              <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Vue 3</span>
+              <span class="tag">RAG</span><span class="tag">Qdrant</span><span class="tag">LoRA</span>
+            </div>
+            <a class="btn primary" href="https://github.com/Sorwcyra/fazhiyun" target="_blank" rel="noopener">打开仓库</a>
+          </div>
+          <div class="ps-right">
+            <div class="flow-head"><span>RAG 问答链路</span><b>FastAPI</b></div>
+            <div class="arch">
+              <div class="arch-row">
+                <div class="anode"><b>导入</b><span>PDF / Word</span></div>
+                <div class="anode"><b>解析</b><span>结构化</span></div>
+                <div class="anode"><b>切块</b><span>法律语义</span></div>
+                <div class="anode"><b>入库</b><span>Qdrant</span></div>
+              </div>
+              <div class="arch-row">
+                <div class="anode"><b>召回</b><span>混合检索</span></div>
+                <div class="anode"><b>重排</b><span>Reranker</span></div>
+                <div class="anode"><b>生成</b><span>SSE 流式</span></div>
+                <div class="anode"><b>溯源</b><span>逐句引用</span></div>
+              </div>
+            </div>
+            <div class="arch-note">
+              <span>关键设计</span>
+              <p>向量 + 关键词并行召回后 RRF 融合，再交给 Reranker 精排；问答结果走 Redis 缓存，长文档解析丢给 Celery 异步跑，引用按句对齐原文。</p>
+            </div>
+            <div class="flow-tags">
+              <span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">MinIO</span>
+              <span class="tag">Celery</span><span class="tag">Docker Compose</span>
+            </div>
+          </div>
         </div>
-        <div class="flow-tags">
-          <span class="tag">DeepSeek</span><span class="tag">Vision</span><span class="tag">Skill 协议</span><span class="tag">纯文本模型增强</span>
+      </article>
+
+      <article class="pslide" data-cat="agent open" data-summary="ds-vision-skill 给 DeepSeek 这类纯文本模型补上多模态看图能力：按 Skill 协议加载视觉工具，把图片转成结构化描述后再交给模型推理，仓库累计 160+ Stars。">
+        <div class="ps-grid">
+          <div class="ps-left">
+            <span class="pill-label">Open Source · Agent</span>
+            <h3 class="ps-name">ds-vision-skill<em>Vision Skill for text-only models</em></h3>
+            <p>
+              给 DeepSeek 等纯文本模型补上多模态图像能力的技能套件：按 Skill 协议挂载视觉工具，把图片转成结构化描述与 OCR 文本，再交给模型继续推理，接入成本只有一行配置。
+            </p>
+            <div class="tags">
+              <span class="tag">AI Agent</span><span class="tag">多模态</span><span class="tag">Skill 协议</span>
+            </div>
+            <a class="btn primary" href="https://github.com/Sorwcyra/ds-vision-skill" target="_blank" rel="noopener">打开仓库</a>
+          </div>
+          <div class="ps-right">
+            <div class="flow-head"><span>能力链路</span><b>Skill</b></div>
+            <div class="arch">
+              <div class="arch-row">
+                <div class="anode"><b>文本模型</b><span>DeepSeek</span></div>
+                <div class="anode"><b>加载技能</b><span>Skill 协议</span></div>
+                <div class="anode"><b>图像识别</b><span>多模态</span></div>
+                <div class="anode"><b>结构化</b><span>回灌上下文</span></div>
+              </div>
+            </div>
+            <div class="arch-note">
+              <span>关键设计</span>
+              <p>Skill 只负责「把图变成文字」，不侵入模型本身；返回描述带结构化字段，方便模型继续推理。</p>
+            </div>
+            <div class="flow-tags">
+              <span class="tag">Vision</span><span class="tag">OCR</span><span class="tag">纯文本模型增强</span>
+            </div>
+          </div>
         </div>
-      </div>
+      </article>
+
+      <article class="pslide" data-cat="agent open" data-summary="ds-vision-plugin 把图片直接接进 DeepSeek Harness 工作流：粘贴即用，四模型视觉赛跑取最快结果，再自动桥接成模型能读的文字。">
+        <div class="ps-grid">
+          <div class="ps-left">
+            <span class="pill-label">Open Source · Plugin</span>
+            <h3 class="ps-name">ds-vision-plugin<em>Image bridge for DeepSeek Harness</em></h3>
+            <p>
+              在 DeepSeek Harness 里直接粘贴图片：四个视觉模型并行赛跑取最快结果，OCR 抽取关键文字后自动桥接成模型能读的文本，不需要手动转述图片内容。
+            </p>
+            <div class="tags">
+              <span class="tag">JavaScript</span><span class="tag">插件</span><span class="tag">OCR</span>
+            </div>
+            <a class="btn primary" href="https://github.com/Sorwcyra/ds-vision-plugin" target="_blank" rel="noopener">打开仓库</a>
+          </div>
+          <div class="ps-right">
+            <div class="flow-head"><span>处理链路</span><b>Plugin</b></div>
+            <div class="arch">
+              <div class="arch-row">
+                <div class="anode"><b>粘贴图片</b><span>Clipboard</span></div>
+                <div class="anode"><b>模型赛跑</b><span>四模型并行</span></div>
+                <div class="anode"><b>OCR</b><span>关键文本</span></div>
+                <div class="anode"><b>文本桥接</b><span>接回对话</span></div>
+              </div>
+            </div>
+            <div class="arch-note">
+              <span>关键设计</span>
+              <p>四个视觉模型并发请求取最快返回，失败自动降级到下一个，OCR 结果与原文一起桥接进对话上下文。</p>
+            </div>
+            <div class="flow-tags">
+              <span class="tag">DeepSeek Harness</span><span class="tag">多模型</span><span class="tag">Clipboard</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
     </div>
 
-    <div class="proj-show reveal" data-cat="plugin">
-      <div class="proj-left">
-        <div class="pill-label">Plugin · JavaScript</div>
-        <h3>ds-vision-plugin</h3>
-        <p>在 DeepSeek Harness 里直接粘贴图片：四模型视觉赛跑、OCR 与自动文本桥接，把图变成模型能读的文字。</p>
-        <div class="tags"><span class="tag">JavaScript</span><span class="tag">插件</span><span class="tag">OCR</span></div>
-        <a class="btn primary" href="https://github.com/Sorwcyra/ds-vision-plugin" target="_blank">打开仓库</a>
-      </div>
-      <div class="proj-right">
-        <div class="flow-head"><span>处理链路</span><span>四模型赛跑</span></div>
-        <div class="flow">
-          <span class="fnode">粘贴图片</span><span class="farrow">→</span>
-          <span class="fnode">四模型并行</span><span class="farrow">→</span>
-          <span class="fnode">OCR 抽取</span><span class="farrow">→</span>
-          <span class="fnode">文本桥接</span>
-        </div>
-        <div class="flow-tags">
-          <span class="tag">DeepSeek Harness</span><span class="tag">多模型</span><span class="tag">OCR</span><span class="tag">Clipboard</span>
-        </div>
-      </div>
+    <div class="pnav">
+      <button class="pnav-btn" id="pPrev" aria-label="上一个项目">←</button>
+      <p class="pnav-text" id="pnavText"></p>
+      <button class="pnav-btn" id="pNext" aria-label="下一个项目">→</button>
+    </div>
+
+    <div class="proj-foot">
+      <span class="sec-pill">• 完整架构</span>
+      <span class="note">仓库里的 README 都有完整架构图与本地启动步骤</span>
     </div>
   </section>
 
@@ -915,18 +1046,36 @@
   window.addEventListener('scroll', highlight, { passive: true });
   highlight();
 
-  // 项目分类筛选
-  const tabs = document.querySelectorAll('.tab');
-  const shows = document.querySelectorAll('.proj-show');
+  // 项目：分类筛选 + 左右切换（参考站同款结构）
+  const tabs = [...document.querySelectorAll('.proj-tabs .tab')];
+  const slides = [...document.querySelectorAll('.pslide')];
+  const pnavText = document.getElementById('pnavText');
+  let pIdx = 0, pCat = 'all';
+  const pVisible = () => slides.filter(s => pCat === 'all' || s.dataset.cat.split(' ').includes(pCat));
+  function pRender() {
+    const vis = pVisible();
+    if (!vis.length) return;
+    if (pIdx < 0 || pIdx >= vis.length) pIdx = 0;
+    slides.forEach(s => s.classList.toggle('on', s === vis[pIdx]));
+    if (pnavText) pnavText.textContent = vis[pIdx].dataset.summary || '';
+  }
   tabs.forEach(t => t.addEventListener('click', () => {
     tabs.forEach(x => x.classList.remove('on'));
     t.classList.add('on');
-    const cat = t.dataset.cat;
-    shows.forEach(s => {
-      const hit = cat === 'all' || s.dataset.cat.split(' ').includes(cat);
-      s.style.display = hit ? 'grid' : 'none';
-    });
+    pCat = t.dataset.cat;
+    pIdx = 0;
+    pRender();
   }));
+  const pPrev = document.getElementById('pPrev'), pNext = document.getElementById('pNext');
+  if (pPrev) pPrev.addEventListener('click', () => {
+    const n = pVisible().length;
+    pIdx = (pIdx - 1 + n) % n; pRender();
+  });
+  if (pNext) pNext.addEventListener('click', () => {
+    const n = pVisible().length;
+    pIdx = (pIdx + 1) % n; pRender();
+  });
+  pRender();
 
   // 叠加滚动动效：后面的卡片盖上来时，前一张缩小 + 变暗
   const stacks = [...document.querySelectorAll('.stack')].map(el => [...el.querySelectorAll('.scard')]);
