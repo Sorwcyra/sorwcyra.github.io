@@ -351,26 +351,43 @@
   .ps-left .tags { margin-top: 16px; }
   .ps-left .btn { margin: 20px 0 0; align-self: flex-start; font-size: 13.5px; padding: 8px 22px; }
 
-  .ps-right { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 12px; }
-  .flow-head { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--muted); }
+  .ps-right { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+
+  /* 架构画布：柔和渐变光 + 节点流程 + 分组标注 */
+  .flow-canvas {
+    position: relative; overflow: hidden; flex: 1;
+    border: 1px solid var(--border); border-radius: 14px;
+    padding: 15px 16px 14px;
+    display: flex; flex-direction: column; gap: 16px; justify-content: space-between;
+    background:
+      radial-gradient(130% 105% at 88% -6%, color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 58%),
+      radial-gradient(95% 90% at 0% 106%, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 62%),
+      color-mix(in srgb, var(--surface) 55%, var(--bg));
+  }
+  .flow-head { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--muted); }
   .flow-head b {
-    font-weight: 500; font-size: 12.5px; color: var(--text);
+    font-weight: 500; font-size: 12px; color: var(--text);
     background: var(--tag-bg); border-radius: 99px; padding: 3px 11px;
   }
-  .arch { flex: 1; display: grid; gap: 14px; align-content: center; }
-  .arch-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  @media (max-width: 620px) { .arch-row { grid-template-columns: repeat(2, 1fr); gap: 10px; } .arch-row .anode::after { display: none; } }
-  .anode {
-    position: relative; border: 1px solid var(--border); border-radius: 9px;
-    padding: 8px 10px; background: color-mix(in srgb, var(--surface) 70%, var(--bg));
+  .flowline { display: flex; align-items: center; flex-wrap: nowrap; gap: 7px; justify-content: space-between; }
+  .fitem {
+    flex: none; border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 11px; font-size: 12px; line-height: 1.2; white-space: nowrap;
+    background: color-mix(in srgb, var(--surface) 72%, var(--bg));
   }
-  .anode::after {
-    content: "→"; position: absolute; right: -13px; top: 50%; transform: translateY(-50%);
-    font-size: 11px; color: var(--dim); line-height: 1; pointer-events: none;
+  .fsep { flex: none; font-size: 11px; line-height: 1; color: var(--dim); }
+  .flabels { display: flex; flex-wrap: wrap; gap: 6px; }
+  .flabel {
+    font-size: 10.8px; color: var(--muted); border: 1px solid var(--border); border-radius: 7px;
+    padding: 4px 9px; background: color-mix(in srgb, var(--bg) 45%, transparent);
   }
-  .anode:nth-child(4n)::after { display: none; }
-  .anode b { display: block; font-size: 12.5px; font-weight: 500; line-height: 1.4; white-space: nowrap; }
-  .anode span { display: block; font-size: 10.5px; color: var(--muted); line-height: 1.5; margin-top: 1px; white-space: nowrap; }
+  @media (max-width: 620px) {
+    .flowline { gap: 4px; }
+    .fitem { padding: 6px 7px; font-size: 10.5px; }
+    .fsep { font-size: 9px; }
+    .flabel { font-size: 10px; padding: 3px 7px; }
+    .flow-canvas { padding: 13px 12px; gap: 13px; }
+  }
   .arch-note { border-top: 1px solid var(--border); padding-top: 10px; }
   .arch-note span { font-size: 11px; color: var(--muted); letter-spacing: .4px; opacity: .85; }
   .arch-note p { font-size: 11.8px; color: var(--muted); line-height: 1.75; margin-top: 3px; }
@@ -791,28 +808,29 @@
             <a class="btn primary" href="https://github.com/Sorwcyra/fazhiyun" target="_blank" rel="noopener">打开仓库</a>
           </div>
           <div class="ps-right">
-            <div class="flow-head"><span>RAG 问答链路</span><b>FastAPI</b></div>
-            <div class="arch">
-              <div class="arch-row">
-                <div class="anode"><b>导入</b><span>PDF / Word</span></div>
-                <div class="anode"><b>解析</b><span>结构化</span></div>
-                <div class="anode"><b>切块</b><span>法律语义</span></div>
-                <div class="anode"><b>入库</b><span>Qdrant</span></div>
+            <div class="flow-canvas">
+              <div class="flow-head"><span>RAG 问答链路</span><b>FastAPI</b></div>
+              <div class="flowline">
+                <span class="fitem">导入</span><span class="fsep">→</span>
+                <span class="fitem">切块</span><span class="fsep">→</span>
+                <span class="fitem">入库</span><span class="fsep">→</span>
+                <span class="fitem">检索</span><span class="fsep">→</span>
+                <span class="fitem">生成</span>
               </div>
-              <div class="arch-row">
-                <div class="anode"><b>召回</b><span>混合检索</span></div>
-                <div class="anode"><b>重排</b><span>Reranker</span></div>
-                <div class="anode"><b>生成</b><span>SSE 流式</span></div>
-                <div class="anode"><b>溯源</b><span>逐句引用</span></div>
+              <div class="flabels">
+                <span class="flabel">解析与法律语义切块</span>
+                <span class="flabel">BGE 向量化 · Qdrant</span>
+                <span class="flabel">混合检索 + Reranker</span>
+                <span class="flabel">逐句引用溯源</span>
               </div>
             </div>
             <div class="arch-note">
               <span>关键设计</span>
-              <p>向量 + 关键词并行召回后 RRF 融合，再交给 Reranker 精排；问答结果走 Redis 缓存，长文档解析丢给 Celery 异步跑，引用按句对齐原文。</p>
+              <p>向量与关键词并行召回后 RRF 融合，再交给 Reranker 精排；长文档解析丢给 Celery 异步跑，答案逐句对齐原文出处。</p>
             </div>
             <div class="flow-tags">
               <span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">MinIO</span>
-              <span class="tag">Celery</span><span class="tag">Docker Compose</span>
+              <span class="tag">Celery</span><span class="tag">Docker</span>
             </div>
           </div>
         </div>
@@ -832,24 +850,24 @@
             <a class="btn primary" href="https://github.com/Sorwcyra/ds-vision-skill" target="_blank" rel="noopener">打开仓库</a>
           </div>
           <div class="ps-right">
-            <div class="flow-head"><span>能力链路</span><b>Skill</b></div>
-            <div class="arch">
-              <div class="arch-row">
-                <div class="anode"><b>图片输入</b><span>本地 / URL</span></div>
-                <div class="anode"><b>视觉模型</b><span>多模态</span></div>
-                <div class="anode"><b>OCR 抽取</b><span>关键文本</span></div>
-                <div class="anode"><b>结构化</b><span>JSON 描述</span></div>
+            <div class="flow-canvas">
+              <div class="flow-head"><span>能力链路</span><b>Skill</b></div>
+              <div class="flowline">
+                <span class="fitem">图片</span><span class="fsep">→</span>
+                <span class="fitem">识别</span><span class="fsep">→</span>
+                <span class="fitem">OCR</span><span class="fsep">→</span>
+                <span class="fitem">描述</span><span class="fsep">→</span>
+                <span class="fitem">推理</span>
               </div>
-              <div class="arch-row">
-                <div class="anode"><b>文本模型</b><span>DeepSeek</span></div>
-                <div class="anode"><b>加载技能</b><span>Skill 协议</span></div>
-                <div class="anode"><b>读取描述</b><span>回灌上下文</span></div>
-                <div class="anode"><b>继续推理</b><span>输出答案</span></div>
+              <div class="flabels">
+                <span class="flabel">Skill 协议挂载视觉工具</span>
+                <span class="flabel">结构化描述回灌上下文</span>
+                <span class="flabel">单文件接入 DeepSeek</span>
               </div>
             </div>
             <div class="arch-note">
               <span>关键设计</span>
-              <p>Skill 只负责「把图变成文字」，不侵入模型本身；返回描述带结构化字段，方便模型继续推理。</p>
+              <p>Skill 只负责把图变成文字，不侵入模型本体；描述带结构化字段，模型拿到后继续推理。</p>
             </div>
             <div class="flow-tags">
               <span class="tag">Vision</span><span class="tag">OCR</span><span class="tag">纯文本模型增强</span>
