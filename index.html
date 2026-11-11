@@ -66,8 +66,8 @@
     color: var(--text); font-size: 14px; padding: 7px 18px; border-radius: 99px; cursor: pointer;
   }
   .nav-cta:hover { background: var(--text); color: var(--bg); }
-  /* 窄屏：收起文字导航，只留 logo + 按钮 */
-  @media (max-width: 760px) {
+  /* 窄屏：收起文字导航，只留 logo + 按钮（860px 以下居中菜单会挤到右侧按钮） */
+  @media (max-width: 860px) {
     .nav-links { display: none; }
     .nav-right { gap: 8px; }
     .nav-cta { padding: 6px 14px; font-size: 13px; }
