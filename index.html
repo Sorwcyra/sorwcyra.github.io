@@ -129,30 +129,52 @@
   .card .desc { color: var(--muted); font-size: 14px; margin-bottom: 12px; }
   .card .link { font-size: 13px; color: var(--accent); }
 
-  /* 竞赛 */
-  .contest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 780px) { .contest-grid { grid-template-columns: 1fr; } }
-  .ccard {
-    position: relative; background: var(--surface); border: 1px solid var(--border);
-    border-radius: 20px; padding: 26px; overflow: hidden; display: flex; flex-direction: column;
-    min-height: 250px; transition: border-color .25s, transform .25s;
+  /* 叠加滚动卡片 */
+  .stack { display: grid; gap: 26px; }
+  .scard {
+    position: sticky; top: 88px;
+    border-radius: 24px; border: 1px solid var(--border);
+    background: var(--surface); overflow: hidden;
+    display: grid; grid-template-columns: .92fr 1.08fr; min-height: 380px;
+    transform-origin: center top; will-change: transform, filter;
   }
-  .ccard:hover { border-color: var(--color-border-secondary, rgba(255,255,255,.22)); transform: translateY(-3px); }
-  .ccard::after {
-    content: ""; position: absolute; right: -60px; top: -60px; width: 220px; height: 220px;
-    border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
-    pointer-events: none;
+  @media (max-width: 820px) { .scard { grid-template-columns: 1fr; min-height: 0; } }
+  .s-left { padding: 34px 34px 30px; display: flex; flex-direction: column; }
+  @media (max-width: 820px) { .s-left { padding: 26px 22px; } }
+  .s-left h3 { font-size: clamp(23px, 2.7vw, 32px); font-weight: 600; line-height: 1.38; margin: 16px 0 14px; }
+  .s-left p { color: var(--muted); font-size: 14.5px; line-height: 1.85; margin-bottom: 6px; }
+  .s-left .more { margin-top: auto; padding-top: 20px; font-size: 13.5px; color: var(--accent); }
+  .s-left .more:hover { text-decoration: underline; }
+  .s-visual {
+    position: relative; border-left: 1px solid var(--border);
+    background:
+      radial-gradient(circle at 70% 30%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+      radial-gradient(circle at 25% 80%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 55%);
+    overflow: hidden;
   }
-  .ccard .label { align-self: flex-start; }
-  .ccard h3 { font-size: clamp(22px, 2.4vw, 28px); font-weight: 600; line-height: 1.35; margin: 14px 0 10px; }
-  .ccard .num { font-size: 34px; font-weight: 600; letter-spacing: -.5px; margin: 2px 0 6px; }
-  .ccard .num small { font-size: 14px; font-weight: 400; color: var(--muted); margin-left: 6px; }
-  .ccard .meta { color: var(--muted); font-size: 13.5px; line-height: 1.7; }
-  .ccard .stats { display: flex; gap: 22px; margin-top: 14px; }
-  .ccard .stat b { display: block; font-size: 17px; font-weight: 600; }
-  .ccard .stat span { font-size: 12px; color: var(--muted); }
-  .ccard .more { margin-top: auto; padding-top: 18px; font-size: 13px; color: var(--accent); }
-  .ccard .more:hover { text-decoration: underline; }
+  @media (max-width: 820px) { .s-visual { border-left: 0; border-top: 1px solid var(--border); min-height: 220px; } }
+  .s-visual .ghost {
+    position: absolute; right: 18px; bottom: 6px; font-size: clamp(56px, 9vw, 104px);
+    font-weight: 600; letter-spacing: -2px; line-height: 1; color: var(--text);
+    opacity: .07; white-space: nowrap; pointer-events: none;
+  }
+  .s-visual .rec {
+    position: absolute; right: 20px; top: 20px;
+    background: var(--pill-bg); border: 1px solid var(--border); border-radius: 99px;
+    padding: 4px 14px; font-size: 12px; color: var(--muted); backdrop-filter: blur(6px);
+  }
+  .mini {
+    position: absolute; left: 22px; bottom: 22px; max-width: 78%;
+    background: color-mix(in srgb, var(--surface) 82%, transparent);
+    border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px;
+    backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  }
+  .mini b { display: block; font-size: 17px; font-weight: 600; margin-bottom: 3px; }
+  .mini span { display: block; font-size: 12.5px; color: var(--muted); }
+  .mini .rec-pill {
+    display: inline-block; margin-top: 12px; background: var(--tag-bg);
+    border-radius: 99px; padding: 3px 12px; font-size: 11.5px; color: var(--muted);
+  }
 
   /* 项目展示 */
   .proj-head { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: start; margin-bottom: 30px; }
@@ -356,51 +378,76 @@
       </p>
     </div>
 
-    <div class="contest-grid">
-      <div class="ccard reveal">
-        <div class="label sec-pill" style="margin-bottom:0">• OJ 训练</div>
-        <div class="num">1935<small>Rating</small></div>
-        <h3>牛客 OJ 训练记录<br>稳定可查。</h3>
-        <div class="meta">Rating 排名 1558 · 172 场比赛 · Rating 赛 87 次 / 14 次个人赛，长期在线的训练曲线。</div>
-        <a class="more" href="https://ac.nowcoder.com/acm/contest/profile/57460426" target="_blank">查看牛客主页 →</a>
-      </div>
-
-      <div class="ccard reveal">
-        <div class="label sec-pill" style="margin-bottom:0">• 团队赛</div>
-        <div class="num">铜奖 ×2<small>ICPC / CCPC</small></div>
-        <h3>ICPC 与 CCPC<br>省赛双铜。</h3>
-        <div class="meta">
-          2025 ICPC 中国贵州省赛铜牌（贵州民族大学，2025.06）<br>
-          重庆市第十三届大学生程序设计大赛铜奖，团队三人（2025.05）
+    <div class="stack">
+      <div class="scard">
+        <div class="s-left">
+          <div class="sec-pill" style="align-self:flex-start;margin-bottom:0">• OJ 训练</div>
+          <h3>OJ 训练记录<br>稳定可查。</h3>
+          <p>牛客 Rating 1935，排名 1558，累计 172 场比赛、87 次 Rating 赛。长期在线的训练曲线，比单次成绩更能说明基础能力。</p>
+          <div class="tags"><span class="tag">牛客 OJ</span><span class="tag">Rating 1935</span><span class="tag">172 场比赛</span></div>
+          <a class="more" href="https://ac.nowcoder.com/acm/contest/profile/57460426" target="_blank">查看牛客主页 →</a>
         </div>
-        <div class="stats">
-          <div class="stat"><b>2</b><span>省赛铜奖</span></div>
-          <div class="stat"><b>3</b><span>团队赛制</span></div>
+        <div class="s-visual">
+          <div class="rec">记录</div>
+          <div class="ghost">1935</div>
+          <div class="mini">
+            <b>牛客 Rating 1935</b>
+            <span>排名 1558 / 172 场比赛 / 87 · 14 Rating 赛</span>
+            <span class="rec-pill">重点记录</span>
+          </div>
         </div>
       </div>
 
-      <div class="ccard reveal">
-        <div class="label sec-pill" style="margin-bottom:0">• 个人赛</div>
-        <div class="num">省一 → 国三<small>蓝桥杯</small></div>
-        <h3>蓝桥杯从省一<br>走到全国总决赛。</h3>
-        <div class="meta">
-          第十五届重庆赛区 C/C++ 程序设计大学 B组 一等奖（2024.04）<br>
-          第十六届全国总决赛 C/C++ 程序设计大学 B组 三等奖（2025.06）
+      <div class="scard">
+        <div class="s-left">
+          <div class="sec-pill" style="align-self:flex-start;margin-bottom:0">• 省赛与国赛</div>
+          <h3>ICPC 与 CCPC<br>省赛双铜。</h3>
+          <p>2025 ICPC 中国贵州省赛铜牌（贵州民族大学，2025.06）；重庆市第十三届大学生程序设计大赛铜奖，团队三人出战（2025.05）。</p>
+          <p style="color:var(--dim);font-size:13.5px">团队赛体现赛时分工与题目筛选，全部成绩有证书可查。</p>
         </div>
-        <div class="stats">
-          <div class="stat"><b>省一</b><span>2024</span></div>
-          <div class="stat"><b>国三</b><span>2025</span></div>
+        <div class="s-visual">
+          <div class="rec">记录</div>
+          <div class="ghost">ICPC · CCPC</div>
+          <div class="mini">
+            <b>ICPC / CCPC Bronze</b>
+            <span>贵州省赛铜牌 · 重庆市赛铜奖</span>
+            <span class="rec-pill">重点记录</span>
+          </div>
         </div>
       </div>
 
-      <div class="ccard reveal">
-        <div class="label sec-pill" style="margin-bottom:0">• 国家级</div>
-        <div class="num">三等奖<small>RAICOM</small></div>
-        <h3>睿抗机器人开发者大赛<br>全国总决赛。</h3>
-        <div class="meta">2025 睿抗机器人开发者大赛（RAICOM）全国总决赛，编程技能竞赛项目三等奖，工业和信息化部人才交流中心主办（2025.08）。</div>
-        <div class="stats">
-          <div class="stat"><b>国家级</b><span>三等奖</span></div>
-          <div class="stat"><b>2025</b><span>全国总决赛</span></div>
+      <div class="scard">
+        <div class="s-left">
+          <div class="sec-pill" style="align-self:flex-start;margin-bottom:0">• 个人赛</div>
+          <h3>蓝桥杯从省一<br>走到全国总决赛。</h3>
+          <p>第十五届蓝桥杯重庆赛区 C/C++ 程序设计大学 B组 一等奖（2024.04）；一年后进入第十六届全国总决赛，拿下 B组三等奖（2025.06）。</p>
+          <p style="color:var(--dim);font-size:13.5px">同一赛事连续两年推进，是训练强度的直接体现。</p>
+        </div>
+        <div class="s-visual">
+          <div class="rec">记录</div>
+          <div class="ghost">省一 → 国三</div>
+          <div class="mini">
+            <b>Lanqiao Cup</b>
+            <span>省一等奖 2024 / 国赛三等奖 2025</span>
+            <span class="rec-pill">重点记录</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scard">
+        <div class="s-left">
+          <div class="sec-pill" style="align-self:flex-start;margin-bottom:0">• 国家级</div>
+          <h3>睿抗机器人开发者大赛<br>全国总决赛三等奖。</h3>
+          <p>2025 睿抗机器人开发者大赛（RAICOM）全国总决赛，编程技能竞赛项目三等奖，工业和信息化部人才交流中心主办（2025.08）。</p>
+        </div>
+        <div class="s-visual">
+          <div class="rec">记录</div>
+          <div class="ghost">RAICOM</div>
+          <div class="mini">
+            <b>RAICOM</b>
+            <span>全国总决赛 · 编程技能竞赛 · 三等奖</span>
+            <span class="rec-pill">重点记录</span>
+          </div>
         </div>
       </div>
     </div>
@@ -470,17 +517,69 @@
   </section>
 
   <section id="hobbies">
-    <div class="sec-head">
-      <div class="sec-pill">• 爱好</div>
-      <h2>爱好</h2>
-      <p>简历之外的生活纹理。</p>
+    <div class="proj-head">
+      <div>
+        <div class="sec-pill">• 爱好</div>
+        <h2 class="proj-title">旅游、美食、爬山、音乐。<br>保留真实的生活纹理。</h2>
+      </div>
+      <p class="proj-desc">爱好区域聚焦长期兴趣：旅行、找吃的、爬山、轻音乐和理财观察，让个人页有简历之外的识别度。</p>
     </div>
-    <div class="hobby-row">
-      <div class="hobby reveal"><b>旅游</b><span>在路上，看世界</span></div>
-      <div class="hobby reveal"><b>美食</b><span>吃遍一座城</span></div>
-      <div class="hobby reveal"><b>爬山</b><span>登顶的成就感</span></div>
-      <div class="hobby reveal"><b>轻音乐</b><span>安静的陪伴</span></div>
-      <div class="hobby reveal"><b>理财观察</b><span>关注美股 · 长期主义</span></div>
+
+    <div class="stack">
+      <div class="scard">
+        <div class="s-left">
+          <div class="sec-pill" style="align-self:flex-start;margin-bottom:0">• 旅游</div>
+          <h3>走出去，<br>见识才会变成判断力。</h3>
+          <p>喜欢在不同的城市和山水之间切换节奏，习惯把路上的见闻记下来。</p>
+        </div>
+        <div class="s-visual"><div class="rec">记录</div><div class="ghost">TRAVEL</div>
+          <div class="mini"><b>Travel</b><span>城市 / 山野 / 沿途记录</span><span class="rec-pill">重点记录</span></div>
+        </div>
+      </div>
+
+      <div class="scard">
+        <div class="s-left">
+          <div class="sec-pill" style="align-self:flex-start;margin-bottom:0">• 美食</div>
+          <h3>吃遍一座城，<br>是最快的了解方式。</h3>
+          <p>到哪儿都先找当地的苍蝇馆子，愿意为一口好吃的多走两公里。</p>
+        </div>
+        <div class="s-visual"><div class="rec">记录</div><div class="ghost">FOOD</div>
+          <div class="mini"><b>Food</b><span>本地小馆 / 街头味道</span><span class="rec-pill">重点记录</span></div>
+        </div>
+      </div>
+
+      <div class="scard">
+        <div class="s-left">
+          <div class="sec-pill" style="align-self:flex-start;margin-bottom:0">• 爬山</div>
+          <h3>登顶的成就感，<br>和写对一道难题很像。</h3>
+          <p>喜欢一步一步往上走的过程，也喜欢到顶后回头看的那一眼。</p>
+        </div>
+        <div class="s-visual"><div class="rec">记录</div><div class="ghost">HIKING</div>
+          <div class="mini"><b>Hiking</b><span>一步一步 / 登顶时刻</span><span class="rec-pill">重点记录</span></div>
+        </div>
+      </div>
+
+      <div class="scard">
+        <div class="s-left">
+          <div class="sec-pill" style="align-self:flex-start;margin-bottom:0">• 音乐</div>
+          <h3>轻音乐是长期<br>写代码的背景音。</h3>
+          <p>写代码、看论文的时候最常放轻音乐，安静，但不影响思路。</p>
+        </div>
+        <div class="s-visual"><div class="rec">记录</div><div class="ghost">MUSIC</div>
+          <div class="mini"><b>Light Music</b><span>写代码 / 看论文的常驻 BGM</span><span class="rec-pill">重点记录</span></div>
+        </div>
+      </div>
+
+      <div class="scard">
+        <div class="s-left">
+          <div class="sec-pill" style="align-self:flex-start;margin-bottom:0">• 理财观察</div>
+          <h3>理财观察连接<br>商业逻辑和长期决策。</h3>
+          <p>关注美股，习惯用结构化记录去理解公司、现金流和技术趋势。</p>
+        </div>
+        <div class="s-visual"><div class="rec">记录</div><div class="ghost">FINANCE</div>
+          <div class="mini"><b>Finance Notes</b><span>美股 / 商业模式 / 技术趋势</span><span class="rec-pill">重点记录</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -549,6 +648,26 @@
       s.style.display = hit ? 'grid' : 'none';
     });
   }));
+
+  // 叠加滚动动效：后面的卡片盖上来时，前一张缩小 + 变暗
+  const stacks = [...document.querySelectorAll('.stack')].map(el => [...el.querySelectorAll('.scard')]);
+  const STICK = 88;
+  function stackFx() {
+    stacks.forEach(cards => {
+      cards.forEach((c, i) => {
+        const next = cards[i + 1];
+        if (!next) { c.style.transform = ''; c.style.filter = ''; return; }
+        const cr = c.getBoundingClientRect();
+        const nr = next.getBoundingClientRect();
+        const cover = Math.min(Math.max((STICK + cr.height - nr.top) / cr.height, 0), 1);
+        c.style.transform = 'scale(' + (1 - cover * 0.05) + ')';
+        c.style.filter = 'brightness(' + (1 - cover * 0.14) + ')';
+      });
+    });
+  }
+  window.addEventListener('scroll', stackFx, { passive: true });
+  window.addEventListener('resize', stackFx);
+  stackFx();
 
   // 滚动入场
   const io = new IntersectionObserver(es => {
