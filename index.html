@@ -406,12 +406,6 @@
     flex: 1; text-align: center; color: var(--muted); font-size: 13.2px; line-height: 1.85;
     max-width: 540px; text-wrap: balance;
   }
-  .proj-foot {
-    display: flex; align-items: center; justify-content: space-between; gap: 14px;
-    flex-wrap: wrap; margin-top: 26px;
-  }
-  .proj-foot .sec-pill { margin-bottom: 0; }
-  .proj-foot .note { color: var(--dim); font-size: 12.5px; }
 
   /* 兴趣 */
   .hobby-row { display: flex; flex-wrap: wrap; gap: 12px; max-width: 860px; }
@@ -520,7 +514,7 @@
   .reveal.on { opacity: 1; transform: none; }
 
   /* 全站内容列：统一宽度并水平居中（参考站同款居中排版） */
-  .sec-head, .grid, .stack, .proj-head, .proj-tabs, .pshow, .pnav, .proj-foot, .hobby-row {
+  .sec-head, .grid, .stack, .proj-head, .proj-tabs, .pshow, .pnav, .hobby-row {
     max-width: 760px;
     margin-left: auto;
     margin-right: auto;
@@ -537,7 +531,7 @@
     .tl-item::before { left: -26px; }
   }
   @media (max-width: 860px) {
-    .sec-head, .grid, .stack, .proj-head, .proj-tabs, .pshow, .pnav, .proj-foot, .hobby-row, .timeline {
+    .sec-head, .grid, .stack, .proj-head, .proj-tabs, .pshow, .pnav, .hobby-row, .timeline {
       max-width: none;
     }
   }
@@ -884,10 +878,6 @@
       <button class="pnav-btn" id="pNext" aria-label="下一个项目">→</button>
     </div>
 
-    <div class="proj-foot">
-      <span class="sec-pill">• 完整架构</span>
-      <span class="note">仓库里的 README 都有完整架构图与本地启动步骤</span>
-    </div>
   </section>
 
   <section id="hobbies">
