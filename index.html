@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汪晨阳 sorwcyra · Personal Page</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --border: rgba(0,0,0,0.10);
+    --text: #1a1c1f;
+    --muted: #6b7078;
+    --dim: #a4a9b0;
+    --accent: #185fa5;
+    --accent-soft: #e6f1fb;
+    --tag-bg: #eef0f3;
+    --pill-bg: rgba(255,255,255,0.08);
+  }
+  html.dark {
+    --bg: #0a0a0b;
+    --surface: #16181b;
+    --border: rgba(255,255,255,0.10);
+    --text: #f2f3f5;
+    --muted: #9aa0a8;
+    --dim: #4c5056;
+    --accent: #85b7eb;
+    --accent-soft: #16222f;
+    --tag-bg: #22262b;
+    --pill-bg: rgba(255,255,255,0.10);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.7; transition: background .3s, color .3s;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+  /* 顶部导航 */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 80%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { font-weight: 600; font-size: 17px; letter-spacing: .3px; }
+  .logo span { color: var(--accent); }
+  .nav-right { display: flex; align-items: center; gap: 22px; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--muted); font-size: 14px; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--pill-bg); border: 1px solid var(--border);
+    color: var(--text); font-size: 14px; padding: 7px 18px; border-radius: 99px; cursor: pointer;
+  }
+  .nav-cta:hover { background: var(--text); color: var(--bg); }
+
+  /* 信息大字区 */
+  .info-section { padding: 150px 0 110px; position: relative; }
+  .sec-pill {
+    display: inline-block; background: var(--pill-bg); border: 1px solid var(--border);
+    border-radius: 99px; padding: 4px 14px; font-size: 13px; color: var(--muted); margin-bottom: 34px;
+  }
+  .big-text { max-width: 660px; margin-left: clamp(0px, 18vw, 260px); font-size: clamp(20px, 2.4vw, 27px); line-height: 1.75; }
+  .big-text p {
+    color: var(--dim); margin-bottom: 34px; padding-left: 0; border-left: 3px solid transparent;
+    transition: color .35s, border-color .35s, padding-left .35s; cursor: default;
+  }
+  .big-text p.on {
+    color: var(--text); border-left-color: var(--text); padding-left: 26px;
+  }
+  .big-text b { font-weight: 600; }
+
+  .mascot { position: absolute; left: 10px; bottom: 60px; width: 130px; opacity: .9; pointer-events: none; }
+
+  /* 通用 section */
+  section { padding: 70px 0; }
+  .sec-head { margin-bottom: 36px; }
+  .sec-head h2 { font-size: 24px; font-weight: 600; }
+  .sec-head p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+  /* 时间线 */
+  .timeline { position: relative; padding-left: 28px; max-width: 760px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px;
+    width: 2px; background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 40px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-item::before {
+    content: ""; position: absolute; left: -28px; top: 8px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--bg); border: 2.5px solid var(--accent);
+  }
+  .tl-item .when { color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: .5px; }
+  .tl-item .what { font-size: 17px; font-weight: 600; margin: 2px 0 8px; }
+  .tl-item .detail {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 20px; color: var(--muted); font-size: 14.5px;
+  }
+  .tl-item .detail ul { margin: 8px 0 0 18px; }
+  .tl-item .detail li { margin-bottom: 5px; }
+  .tags { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { background: var(--tag-bg); color: var(--muted); font-size: 12px; padding: 2px 11px; border-radius: 99px; }
+
+  /* 卡片 */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 860px; }
+  @media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px 24px; }
+  .card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .card .desc { color: var(--muted); font-size: 14px; margin-bottom: 12px; }
+  .card .link { font-size: 13px; color: var(--accent); }
+
+  /* 兴趣 */
+  .hobby-row { display: flex; flex-wrap: wrap; gap: 12px; max-width: 860px; }
+  .hobby { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 22px; font-size: 14px; min-width: 160px; }
+  .hobby b { display: block; font-weight: 600; margin-bottom: 2px; }
+  .hobby span { color: var(--muted); font-size: 13px; }
+
+  /* 社媒 */
+  .social-sec {
+    position: relative; text-align: center; padding: 90px 0 110px;
+    border-top: 1px solid var(--border); overflow: hidden;
+  }
+  .rings { position: absolute; left: 50%; top: 58%; transform: translate(-50%, -50%); pointer-events: none; }
+  .ring { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); border: 1px solid var(--border); border-radius: 50%; }
+  .social-sec .sec-pill { margin-bottom: 10px; }
+  .social-hint { color: var(--muted); font-size: 13px; margin-bottom: 46px; }
+  .icon-stage { position: relative; height: 150px; max-width: 640px; margin: 0 auto 10px; }
+  .s-icon {
+    position: absolute; width: 58px; height: 58px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border); box-shadow: 0 6px 24px rgba(0,0,0,.35);
+    transition: transform .25s;
+  }
+  .s-icon:hover { transform: translateY(-6px) scale(1.08); }
+  .s-icon svg { width: 28px; height: 28px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .float1 { animation: bob 3.2s ease-in-out infinite; }
+    .float2 { animation: bob 3.8s ease-in-out .6s infinite; }
+    .float3 { animation: bob 3.5s ease-in-out 1.1s infinite; }
+  }
+  @keyframes bob { 0%,100% { margin-top: 0; } 50% { margin-top: -9px; } }
+  .social-title { font-size: clamp(26px, 3.4vw, 38px); font-weight: 600; margin-bottom: 12px; }
+  .social-title .hl { color: var(--accent); }
+  .social-sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+</style>
+  .btn {
+    display: inline-block; padding: 10px 26px; border-radius: 99px;
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text); font-size: 14px; margin: 0 6px; cursor: pointer;
+  }
+  .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 500; }
+
+  footer { text-align: center; color: var(--dim); font-size: 13px; padding: 24px 0 44px; }
+
+  /* 入场动画 */
+  .reveal { opacity: 0; transform: translateY(14px); transition: all .5s ease; }
+  .reveal.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <div class="logo">sorwcyra<span>.</span></div>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#info">信息</a>
+        <a href="#journey">历程</a>
+        <a href="#awards">奖项</a>
+        <a href="#projects">项目</a>
+        <a href="#hobbies">爱好</a>
+      </div>
+      <a class="nav-cta" href="https://github.com/sorwcyra" target="_blank">GitHub</a>
+      <a class="nav-cta" href="mailto:19112634506@163.com">联系我</a>
+      <button class="nav-cta" id="themeBtn" title="切换深浅色" style="width:36px;padding:0">☾</button>
+    </div>
+  </div>
+</nav>
+
+<!-- 信息：模仿参考站的大字滚动高亮版式 -->
+<section id="info" class="info-section">
+  <div class="wrap">
+    <div class="sec-pill">• 信息</div>
+    <div class="big-text" id="bigText">
+      <p class="on">我是<b>汪晨阳</b>，技术 ID 为 <b>sorwcyra</b>，长江师范学院数据科学与大数据技术专业本科在读，目前在重庆大学卓越工程师学院人工智能专业本科交换在读，预计 2027 年毕业。</p>
+      <p>主要技术方向为 <b>Python 后端开发</b>、<b>AI Agent 开发</b>、<b>低代码平台开发</b>。</p>
+      <p>开源贡献者，个人项目 GitHub 累计 <b>160+ Stars</b>；技术分享创作者，全网累计 <b>340+ 粉丝</b>，<b>1.1w+ 点赞</b>，<b>52w+ 浏览量</b>。</p>
+      <p>生活中，我喜欢旅游、吃美食、爬山、听轻音乐。除此之外，我对理财也有一定的兴趣，关注美股，保持对技术和生活的长期探索。</p>
+    </div>
+  </div>
+  <svg class="mascot" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse cx="58" cy="52" rx="34" ry="26" fill="var(--surface)" stroke="var(--text)" stroke-width="2"/>
+    <circle cx="46" cy="44" r="3" fill="var(--text)"/>
+    <circle cx="66" cy="44" r="3" fill="var(--text)"/>
+    <path d="M52 52 Q56 56 60 52" stroke="var(--text)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M34 32 L40 18 L48 28 M74 32 L70 18 L62 28" stroke="var(--text)" stroke-width="2" fill="var(--surface)" stroke-linejoin="round"/>
+    <path d="M92 60 L112 60 M96 66 L110 66 M100 72 L106 72" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M20 56 Q10 58 14 66" stroke="var(--text)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </svg>
+</section>
+
+<main class="wrap">
+
+  <section id="journey">
+    <div class="sec-head">
+      <div class="sec-pill">• 历程</div>
+      <h2>我的历程</h2>
+      <p>经历按阶段串成一条线，每一步都落在具体的事上。</p>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="when">2024.04</div>
+        <div class="what">第一块敲门砖：蓝桥杯省一等奖</div>
+        <div class="detail">
+          第十五届蓝桥杯全国软件和信息技术专业人才大赛 · 重庆赛区 C/C++ 程序设计大学 B组 <b style="color:var(--text)">一等奖</b>。
+          从这一年开始系统训练算法：数据结构、动态规划、图论，为后面的 ICPC / CCPC 打底。
+          <div class="tags"><span class="tag">C/C++</span><span class="tag">算法竞赛</span><span class="tag">省一等奖</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="when">2025.05 — 2025.08</div>
+        <div class="what">密集赛季：四项国家级 / 省级奖项</div>
+        <div class="detail">
+          2025 上半年进入密集比赛期，两个月内拿下三块奖牌，暑期再添一项全国三等奖：
+          <ul>
+            <li><b style="color:var(--text)">CCPC 重庆市赛 铜奖</b> — 2025 年重庆市第十三届大学生程序设计大赛，团队三人（2025.05）</li>
+            <li><b style="color:var(--text)">ICPC 贵州省赛 铜牌</b> — The 2025 ICPC China Guizhou Provincial Programming Contest（2025.06）</li>
+            <li><b style="color:var(--text)">蓝桥杯全国总决赛 三等奖</b> — 第十六届蓝桥杯 C/C++ 程序设计大学 B组（2025.06）</li>
+            <li><b style="color:var(--text)">睿抗机器人开发者大赛（RAICOM）全国总决赛 三等奖</b> — 编程技能竞赛项目，工业和信息化部人才交流中心（2025.08）</li>
+          </ul>
+          <div class="tags"><span class="tag">ICPC</span><span class="tag">CCPC</span><span class="tag">蓝桥杯</span><span class="tag">RAICOM</span><span class="tag">团队协作</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="when">2026</div>
+        <div class="what">从做题到科研：EI 国际会议论文发表</div>
+        <div class="detail">
+          以第二作者发表 EI 检索会议论文：<b style="color:var(--text)">Improving Plastic Bottles Recognition with Data Augmentation Methods</b>
+          （Fuzzy Systems and Data Mining XI, IOS Press, FAIA Vol.417, DOI: 10.3233/FAIA251661）。
+          <ul>
+            <li>研究方向：水面塑料瓶目标识别的数据增强方法，覆盖翻转、平移变换、同态滤波、超分辨率、直方图均衡、高斯噪声六种增强策略</li>
+            <li>实验：在多目标 / 单目标数据集上分别训练 Faster R-CNN 与 YOLOv5，组合增强策略使 YOLOv5 单目标识别准确率达 100%</li>
+          </ul>
+          <div class="tags"><span class="tag">深度学习</span><span class="tag">数据增强</span><span class="tag">Faster R-CNN</span><span class="tag">YOLOv5</span><span class="tag">EI 论文</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="when">现在 — 未来</div>
+        <div class="what">下一站，持续更新中</div>
+        <div class="detail">
+          继续深入 Python 后端与 AI Agent 方向，正在准备新的项目与实习机会。
+          <div class="tags"><span class="tag">实习求职中</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="awards">
+    <div class="sec-head">
+      <div class="sec-pill">• 奖项</div>
+      <h2>重点奖项</h2>
+      <p>快速索引，详细过程在上面时间线里。</p>
+    </div>
+    <div class="grid">
+      <div class="card reveal">
+        <h3>蓝桥杯 省一 + 国三</h3>
+        <div class="desc">第十五届重庆赛区 C/C++ B组一等奖（2024）；第十六届全国总决赛 B组三等奖（2025）。</div>
+        <div class="tags"><span class="tag">算法</span><span class="tag">C/C++</span></div>
+      </div>
+      <div class="card reveal">
+        <h3>ICPC / CCPC 双铜</h3>
+        <div class="desc">2025 ICPC 贵州省赛铜牌；重庆市第十三届大学生程序设计大赛铜奖（团队）。</div>
+        <div class="tags"><span class="tag">ICPC</span><span class="tag">CCPC</span><span class="tag">团队赛</span></div>
+      </div>
+      <div class="card reveal">
+        <h3>睿抗 RAICOM 国三</h3>
+        <div class="desc">2025 睿抗机器人开发者大赛全国总决赛 编程技能竞赛项目三等奖。</div>
+        <div class="tags"><span class="tag">编程技能</span><span class="tag">国家级</span></div>
+      </div>
+      <div class="card reveal">
+        <h3>EI 会议论文 二作</h3>
+        <div class="desc">FSDM XI（IOS Press）发表，YOLOv5 + 数据增强的水面目标识别，单目标准确率 100%。</div>
+        <div class="tags"><span class="tag">科研</span><span class="tag">深度学习</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head">
+      <div class="sec-pill">• 项目</div>
+      <h2>项目</h2>
+      <p>仓库边界清晰，点进去就能看。</p>
+    </div>
+    <div class="grid">
+      <div class="card reveal">
+        <h3>项目名称一</h3>
+        <div class="desc">一句话说清这个项目解决什么问题、用了什么技术。（待补充：Python 后端 / AI Agent / 低代码项目）</div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">待补充</span></div>
+        <a class="link" href="https://github.com/sorwcyra" target="_blank">打开仓库 →</a>
+      </div>
+      <div class="card reveal">
+        <h3>项目名称二</h3>
+        <div class="desc">一句话说清这个项目解决什么问题、用了什么技术。（待补充）</div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">待补充</span></div>
+        <a class="link" href="https://github.com/sorwcyra" target="_blank">打开仓库 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="hobbies">
+    <div class="sec-head">
+      <div class="sec-pill">• 爱好</div>
+      <h2>爱好</h2>
+      <p>简历之外的生活纹理。</p>
+    </div>
+    <div class="hobby-row">
+      <div class="hobby reveal"><b>旅游</b><span>在路上，看世界</span></div>
+      <div class="hobby reveal"><b>美食</b><span>吃遍一座城</span></div>
+      <div class="hobby reveal"><b>爬山</b><span>登顶的成就感</span></div>
+      <div class="hobby reveal"><b>轻音乐</b><span>安静的陪伴</span></div>
+      <div class="hobby reveal"><b>理财观察</b><span>关注美股 · 长期主义</span></div>
+    </div>
+  </section>
+
+</main>
+
+<section id="contact" class="social-sec">
+  <div class="rings">
+    <div class="ring" style="width:280px;height:280px"></div>
+    <div class="ring" style="width:520px;height:520px;opacity:.6"></div>
+    <div class="ring" style="width:800px;height:800px;opacity:.35"></div>
+  </div>
+  <div style="position:relative">
+    <div class="sec-pill">• 社媒</div>
+    <div class="social-hint">点击图标访问社媒</div>
+    <div class="icon-stage">
+      <a class="s-icon float1" style="left:8%;top:34%" href="https://github.com/sorwcyra" target="_blank" title="GitHub">
+        <svg viewBox="0 0 16 16" fill="var(--text)" xmlns="http://www.w3.org/2000/svg"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+      <a class="s-icon float2" style="left:46%;top:6%;width:64px;height:64px;background:#111" href="https://www.douyin.com/user/你的抖音ID" target="_blank" title="抖音">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#25F4EE" d="M9.3 9.6v2.2c-1.7 0-3.2-.6-4.4-1.5v5.9c0 2.9-2.4 5.3-5.3 5.3v-2.2c1.7 0 3.1-1.4 3.1-3.1V6.3h2.2c.3 1.9 2 3.3 4.4 3.3z" transform="translate(7.5 -1)"/><path fill="#FE2C55" d="M9.9 6.3h2.2c.2 1.9 1.7 3.4 3.9 3.5v2.2c-1.5 0-2.9-.5-4-1.3v5.9c0 2.9-2.4 5.3-5.3 5.3S1.4 19.5 1.4 16.6 3.8 11.3 6.7 11.3v2.2c-1.7 0-3.1 1.4-3.1 3.1s1.4 3.1 3.1 3.1 3.1-1.4 3.1-3.1L9.9 6.3z"/><path fill="#fff" d="M9.9 6.3h2.2c.2 1.9 1.7 3.4 3.9 3.5v2.2c-1.5 0-2.9-.5-4-1.3v5.9c0 2.9-2.4 5.3-5.3 5.3v-2.2c1.7 0 3.1-1.4 3.1-3.1L9.9 6.3z"/></svg>
+      </a>
+      <a class="s-icon float3" style="right:10%;top:40%;background:var(--text)" href="mailto:19112634506@163.com" title="邮箱">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2" stroke="var(--bg)" stroke-width="2"/><path d="M4 7l8 6 8-6" stroke="var(--bg)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+    <h2 class="social-title">沟通与协作，<span class="hl">从这里开始。</span></h2>
+    <p class="social-sub">实习机会、技术交流、开源协作，可以直接通过邮箱联系。</p>
+    <a class="btn primary" href="mailto:19112634506@163.com">发送邮件</a>
+  </div>
+</section>
+
+<footer>© 2026 汪晨阳 sorwcyra · Built with plain HTML, deployed on GitHub Pages</footer>
+
+<script>
+  // 深浅色切换
+  const btn = document.getElementById('themeBtn');
+  btn.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+    btn.textContent = document.documentElement.classList.contains('dark') ? '☀' : '☾';
+  });
+
+  // 大字段落滚动高亮（模仿参考站）
+  const paras = document.querySelectorAll('#bigText p');
+  function highlight() {
+    let best = 0, bestDist = Infinity;
+    paras.forEach((p, i) => {
+      const r = p.getBoundingClientRect();
+      const d = Math.abs(r.top + r.height / 2 - window.innerHeight * 0.45);
+      if (d < bestDist) { bestDist = d; best = i; }
+    });
+    paras.forEach((p, i) => p.classList.toggle('on', i === best));
+  }
+  window.addEventListener('scroll', highlight, { passive: true });
+  highlight();
+
+  // 滚动入场
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
