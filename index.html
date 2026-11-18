@@ -795,13 +795,14 @@
         <h2 class="proj-title">从业务链路到技术选型。<br>每个仓库都能跑起来。</h2>
       </div>
       <p class="proj-desc">
-        法智云是主线：一套完整的法律知识 RAG 问答系统，从文档解析、混合检索到自研 LoRA 模型。另一个是把多模态能力接进纯文本模型的 DeepSeek 技能仓库。
+        法智云是主线：一套完整的法律知识 RAG 问答系统，从文档解析、混合检索到自研 LoRA 模型。另一个是把多模态能力接进纯文本模型的 DeepSeek 技能仓库。还有一个落地到硬件上的仓储巡逻系统，考验的是车云链路和工程部署。
       </p>
     </div>
 
     <div class="proj-tabs">
       <button class="tab on">法智云</button>
       <button class="tab">ds-vision-skill</button>
+      <button class="tab">smart-patrol-system</button>
     </div>
 
     <div class="pshow" id="pshow">
@@ -884,6 +885,47 @@
             </div>
             <div class="flow-tags">
               <span class="tag">Vision</span><span class="tag">OCR</span><span class="tag">纯文本模型增强</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pslide" data-summary="smart-patrol-system 是一体化仓储智能巡逻系统（松灵小车版）：Vue 后台配置巡逻路线与任务，FastAPI 承接鉴权、调度与告警，边缘端 ROS 控制松灵底盘执行巡逻，车云之间用 MQTT 双向通信，MySQL 与 Redis 承担业务数据与实时状态。">
+        <div class="ps-grid">
+          <div class="ps-left">
+            <span class="pill-label">Robot · IoT</span>
+            <h3 class="ps-name">smart-patrol-system<em>仓储智能巡逻 · 松灵小车</em></h3>
+            <p>
+              一体化仓储智能巡逻系统，跑在松灵（AgileX）移动底盘上。后台配置巡逻路线并下发任务，边缘端 ROS 控制小车按既定路线行进，同时持续采集运行状态；MQTT 负责车云双向通信，前端据此做实时监控、异常告警与历史轨迹查询。
+            </p>
+            <div class="tags">
+              <span class="tag">FastAPI</span><span class="tag">Vue</span><span class="tag">ROS</span>
+              <span class="tag">MQTT</span><span class="tag">MySQL</span><span class="tag">Redis</span>
+            </div>
+            <a class="btn primary" href="https://gitee.com/gggxxxbbb/smart-patrol-system" target="_blank" rel="noopener">打开仓库</a>
+          </div>
+          <div class="ps-right">
+            <div class="flow-canvas">
+              <div class="flow-head"><span>车云协同链路</span><b>MQTT</b></div>
+              <div class="flowline">
+                <span class="fitem">配置路线</span><span class="fsep">→</span>
+                <span class="fitem">下发任务</span><span class="fsep">→</span>
+                <span class="fitem">ROS 执行</span><span class="fsep">→</span>
+                <span class="fitem">状态回传</span><span class="fsep">→</span>
+                <span class="fitem">监控告警</span>
+              </div>
+              <div class="flabels">
+                <span class="flabel">Vue 后台维护路线与任务</span>
+                <span class="flabel">边缘端 ROS 控制松灵底盘</span>
+                <span class="flabel">MQTT 上报状态 · 轨迹入库</span>
+              </div>
+            </div>
+            <div class="arch-note">
+              <span>关键设计</span>
+              <p>业务面与设备面彻底拆开：前端只跟 FastAPI 打交道，不直接连车；任务调度、角色权限、告警判定都在服务端收敛。车端经 MQTT 收指令、传数据，链路断开也只影响这一台车，不会拖垮整个后台。</p>
+            </div>
+            <div class="flow-tags">
+              <span class="tag">Docker</span><span class="tag">Nginx</span><span class="tag">松灵底盘</span>
             </div>
           </div>
         </div>
