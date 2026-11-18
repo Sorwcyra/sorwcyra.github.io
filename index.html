@@ -202,6 +202,8 @@
 
   /* 通用 section */
   section { padding: 70px 0; }
+  /* 锚点跳转时为固定导航留出空间 */
+  section[id] { scroll-margin-top: 84px; }
   .sec-head { margin-bottom: 36px; }
   .sec-head h2 { font-size: 24px; font-weight: 600; }
   .sec-head p { color: var(--muted); font-size: 14px; margin-top: 4px; }
@@ -535,6 +537,49 @@
       max-width: none;
     }
   }
+
+  /* 校园经历：荣誉条 + 经历卡片 */
+  .cp-honor {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    max-width: 760px; margin: 0 auto 18px;
+  }
+  .cp-honor .h {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 15px 16px;
+  }
+  .cp-honor .h b { display: block; font-size: 14.5px; font-weight: 600; margin-bottom: 2px; }
+  .cp-honor .h span { display: block; color: var(--muted); font-size: 12.5px; line-height: 1.55; }
+
+  .cp-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    max-width: 760px; margin: 0 auto;
+  }
+  .cp-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px 22px;
+    display: flex; flex-direction: column;
+  }
+  .cp-top {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 12px; margin-bottom: 3px;
+  }
+  .cp-top h3 { font-size: 15.5px; font-weight: 600; line-height: 1.45; }
+  .cp-top .cp-when {
+    color: var(--accent); font-size: 12.5px; font-weight: 600;
+    white-space: nowrap; letter-spacing: .3px;
+  }
+  .cp-role { color: var(--dim); font-size: 12.5px; margin-bottom: 12px; }
+  .cp-card ul { margin: 0 0 0 16px; }
+  .cp-card li {
+    color: var(--muted); font-size: 13.8px; line-height: 1.75; margin-bottom: 7px;
+  }
+  .cp-card li:last-child { margin-bottom: 0; }
+  .cp-card li b { color: var(--text); font-weight: 600; }
+  .cp-card .tags { margin-top: auto; padding-top: 14px; }
+  @media (max-width: 860px) {
+    .cp-honor { grid-template-columns: 1fr 1fr; max-width: none; }
+    .cp-grid { grid-template-columns: 1fr; max-width: none; }
+  }
 </style>
 </head>
 <body>
@@ -547,6 +592,7 @@
         <a href="#info">信息</a>
         <a href="#journey">历程</a>
         <a href="#awards">竞赛</a>
+        <a href="#campus">校园</a>
         <a href="#projects">项目</a>
         <a href="#hobbies">爱好</a>
       </div>
@@ -581,6 +627,7 @@
         <a class="on" href="#info">信息</a>
         <a href="#journey">历程</a>
         <a href="#awards">竞赛</a>
+        <a href="#campus">校园</a>
         <a href="#projects">项目</a>
         <a href="#hobbies">爱好</a>
         <a href="#contact">社媒</a>
@@ -785,6 +832,78 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- 校园经历：奖学金、学生会、助教与勤工助学 -->
+  <section id="campus">
+    <div class="sec-head">
+      <div class="sec-pill">• 校园</div>
+      <h2>校园经历</h2>
+      <p>组织一场两百人的赛事、带一届新生的课、把部门的重复劳动做成工具——这些事和技术无关，但决定事情能不能落地。</p>
+    </div>
+
+    <div class="cp-honor reveal">
+      <div class="h"><b>特等学业奖学金</b><span>校级 · 多次获得</span></div>
+      <div class="h"><b>一等学业奖学金</b><span>校级</span></div>
+      <div class="h"><b>创新能力先进个人</b><span>校级</span></div>
+      <div class="h"><b>专业排名前 10%</b><span>GPA 3.27 / 5.0</span></div>
+    </div>
+
+    <div class="cp-grid">
+
+      <div class="cp-card reveal">
+        <div class="cp-top">
+          <h3>学生会 · 学院实践部</h3>
+          <span class="cp-when">2024.09 — 2025.06</span>
+        </div>
+        <div class="cp-role">干部 · 赛事与培训组织</div>
+        <ul>
+          <li><b>赛事统筹</b>：统筹覆盖 200 余人的校级装机大赛，负责方案策划、场地协调与现场控场，赛事全程平稳落地。</li>
+          <li><b>技术培训</b>：牵头 50 余人规模的重装系统专场，现场演示微软系统盘制作与系统重装全流程。</li>
+        </ul>
+        <div class="tags"><span class="tag">组织统筹</span><span class="tag">200+ 人赛事</span><span class="tag">技术培训</span></div>
+      </div>
+
+      <div class="cp-card reveal">
+        <div class="cp-top">
+          <h3>学生助教 · C 语言课程</h3>
+          <span class="cp-when">2024.09 — 2026.06</span>
+        </div>
+        <div class="cp-role">连续两届 · 获聘助教两份</div>
+        <ul>
+          <li><b>课程辅导</b>：连续两届承担大一新生特色晚自习 C 语言指导，衔接课堂教学与课后答疑。</li>
+          <li><b>竞赛孵化</b>：整理共享学习方法、课程资源与个人笔记，引导班级组队参赛并独立命制校赛选拔题，获 C 语言教研组认可。</li>
+        </ul>
+        <div class="tags"><span class="tag">助教聘书 ×2</span><span class="tag">竞赛启蒙</span><span class="tag">校赛命题</span></div>
+      </div>
+
+      <div class="cp-card reveal">
+        <div class="cp-top">
+          <h3>音乐学院 · 勤工助学</h3>
+          <span class="cp-when">2025.09 — 2025.12</span>
+        </div>
+        <div class="cp-role">大创协作 · 学院事务支撑</div>
+        <ul>
+          <li><b>竞赛协作</b>：经教师引荐参与大创项目，作品「五音愈心」获校级一等奖并入选市赛。</li>
+          <li><b>事务支撑</b>：承担学院财务报表数据处理、课程实践周方案统计、公众号课程素材整理、实习实训材料归档、机房电脑配置方案设计与演出视频剪辑，获学院办公室及院长认可。</li>
+        </ul>
+        <div class="tags"><span class="tag">大创校级一等奖</span><span class="tag">市级入选</span><span class="tag">视频剪辑</span></div>
+      </div>
+
+      <div class="cp-card reveal">
+        <div class="cp-top">
+          <h3>图书馆 · 勤工助学</h3>
+          <span class="cp-when">2025.08 — 2025.09</span>
+        </div>
+        <div class="cp-role">读者服务 · 流程自动化</div>
+        <ul>
+          <li><b>竞赛赋能</b>：参加 AI 素养大赛获校第一名，并制作工具演示视频用于后续赛事推广。</li>
+          <li><b>服务与自动化</b>：负责新生入馆教育、馆藏宣传、读者咨询与数据库推广；用自建智能体把邮件里的赛事信息自动导入表格，基于往期文章搭建仿写智能体支撑公众号内容生产，工具在部门内沿用。</li>
+        </ul>
+        <div class="tags"><span class="tag">AI 素养大赛校第一</span><span class="tag">智能体自动化</span><span class="tag">工具沿用</span></div>
+      </div>
+
     </div>
   </section>
 
